@@ -259,6 +259,7 @@ class TedPromise {
 /**
  * 以下扩展用于Promise/A+规范测试。
  * 对应的测试脚本在promises-aplus-tests中。
+ * 只需实现构造方法及then即可测试。
  * 测试命令: promises-aplus-tests yourPromise.js
  */
 /* TedPromise.defer = TedPromise.deferred = function() {
