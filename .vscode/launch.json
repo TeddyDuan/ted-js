@@ -13,19 +13,6 @@
         "<node_internals>/**"
       ],
       "autoAttachChildProcesses": true
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "npm debug",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "env": {
-        "DEBUG": "*,-not_this",
-        "DEBUG_COLORS": "true"
-      },
-      "program": "${workspaceFolder}/_4npm/debug/app.js"
     }
   ]
 }

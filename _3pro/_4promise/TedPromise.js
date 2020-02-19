@@ -214,21 +214,23 @@ class TedPromise {
       if (!promises) resolve(results);
 
       try {
-        const it = promises[Symbol.iterator]();
-
-        for (let i = -1, next = it.next(); !next.done; next = it.next()) {
+        let i = -1; // 保证返回结果的下标和promises一致。
+        let resolveCount = 0; // 记录成功resolve的promise的个数。
+        for (const p of promises) {
           i++;
-          Promise.resolve(next.value).then(
-            /* eslint-disable */
-            (rt) => {
-              results[i] = rt;
-            },
-            /* eslint-enable */
-            (reason) => reject(reason),
-          );
+          Promise.resolve(p)
+            .then(
+              /* eslint-disable */
+              (val) => {
+                results[i] = val;
+                if (++resolveCount === promises.length) {
+                  resolve(results); // 所有promise均resolve之后，Promise.all才可resolve.
+                }
+              },
+              /* eslint-enable */
+            )
+            .catch((e) => reject(e));
         }
-
-        resolve(results);
       } catch (e) {
         reject(e);
       }
